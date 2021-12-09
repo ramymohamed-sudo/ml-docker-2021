@@ -32,7 +32,7 @@ node{
         customImage.inside {
         sh 'ls'
         sh 'echo Hello Classical Regression'
-        sh 'python3 ./Classical/lr_rf_svr.py'
+        sh 'python3 ./classical-reg/load_data.py'
         
     }
     }
