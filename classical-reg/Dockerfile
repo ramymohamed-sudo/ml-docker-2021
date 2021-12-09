@@ -1,6 +1,6 @@
-FROM smizy/scikit-learn
+FROM python:latest
 # smizy/scikit-learn
-# python:latest
+
 
 WORKDIR /var/lib/python
 
@@ -8,6 +8,7 @@ COPY . .
 
 RUN pip install --no-cache-dir -r requirements.txt
 # RUN /usr/local/bin/python -m pip install --upgrade pip
+# You should consider upgrading via the '/usr/bin/python3.8 -m pip install --upgrade pip' command.
 
 # COPY train.csv ./train.csv
 # COPY test.csv ./test.csv

@@ -38,13 +38,13 @@ node{
     }
 
 
-    // stage('Push'){
-    //     docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-    //         // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
-    //         customImage.push()
+    stage('Push'){
+        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
+            // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+            customImage.push()
 
-    //     }
-    // }    
+        }
+    }    
 
     
 }
