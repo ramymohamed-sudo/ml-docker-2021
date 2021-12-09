@@ -1,4 +1,6 @@
-FROM python:latest
+FROM smizy/scikit-learn
+# smizy/scikit-learn
+# python:latest
 
 WORKDIR /var/lib/python
 
