@@ -7,7 +7,7 @@ WORKDIR /var/lib/python
 COPY . . 
 
 RUN pip install --no-cache-dir -r requirements.txt
-RUN /usr/local/bin/python -m pip install --upgrade pip
+# RUN /usr/local/bin/python -m pip install --upgrade pip
 
 # COPY train.csv ./train.csv
 # COPY test.csv ./test.csv
