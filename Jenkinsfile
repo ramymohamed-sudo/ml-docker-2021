@@ -14,6 +14,7 @@ node{
 
 
     stage('Build'){
+
 // Build from image        
 //        def myTestContainer = docker.image('jupyter/scipy-notebook')
 //         myTestContainer.pull()
@@ -39,13 +40,13 @@ node{
 
 
     stage('Push'){
-        docker.withRegistry('https://index.docker.io/v1/', 'dockerhub'){
-            // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()
+        docker.withRegistry('https://index.docker.io/v1/', '7ec5aa2d-ed10-4282-ba0a-527c27a55a11'){  
+            // 'dockerhub'   replaced with '7ec5aa2d-ed10-4282-ba0a-527c27a55a11'
+            // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()            
             customImage.push()
 
         }
     }    
-
     
 }
 
