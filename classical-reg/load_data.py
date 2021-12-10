@@ -25,11 +25,11 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 start_time = datetime.datetime.now()
 
 model_dir = './' 
-logs_directory = "logs-h5-models"
-path = os.path.join(model_dir, logs_directory)
-os.mkdir(path)
 
-
+if not ('logs-h5-models' in os.listdir(model_dir)):
+    logs_directory = "logs-h5-models"
+    path = os.path.join(model_dir, logs_directory)
+    os.mkdir(path)
 
 if not ('CMAPSSData' in os.listdir(model_dir)):
     data_directory = "CMAPSSData"
