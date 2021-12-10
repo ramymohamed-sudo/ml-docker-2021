@@ -31,20 +31,18 @@ from joblib import dump, load
 
 test_size = 0.2
 
-model_dir = '../'   # for docker
+model_dir = '../'
 file_path = model_dir + 'CMAPSSData/'
 if not ('CMAPSSData' in os.listdir(model_dir)):
-    file_path = './scripts/CMAPSSData/'
+    file_path = './CMAPSSData/'
 
-# model_dir_for_logs_and_h5 = model_dir+'logs-h5-models/'
-model_dir_for_logs_and_h5 = './'
-# if not ('logs-h5-models' in os.listdir(model_dir)):
-#     model_dir_for_logs_and_h5 = './scripts/logs-h5-models/'
+logs_and_h5_path = model_dir+'logs-h5-models/'
+if not ('logs-h5-models' in os.listdir(model_dir)):
+    logs_and_h5_path = './logs-h5-models/'
 
 train_file = [file_path+f"train_FD00{i}.txt" for i in [1, 2, 3, 4]]
 test_file = [file_path+f"test_FD00{i}.txt" for i in [1, 2, 3, 4]]
 rul_file = [file_path+f"RUL_FD00{i}.txt" for i in [1, 2, 3, 4]]
-
 
 
 """ Regression models """
@@ -61,6 +59,7 @@ rul_file = [file_path+f"RUL_FD00{i}.txt" for i in [1, 2, 3, 4]]
 model_names = ['LinearRegression', 'DecisionTreeRegressor',
                'RandomForestRegressor', 'SVR',
                'ExtraTreesRegressor', 'GradientBoostingRegressor']
+
 
 """ Model1: Linear Regression """
 linear_model_reg = LinearRegression(n_jobs=-1)
@@ -92,6 +91,7 @@ rf_model_reg = RandomForestRegressor(random_state=42, n_jobs=-1)   # default 'ms
 # looking for the best split: If int, then consider max_features features at each split.     # noqa
 # n_jobs int,
 
+
 """ Model4: SVM Model """
 svr_model_reg = SVR()   # loss{‘epsilon_insensitive’, ‘squared_epsilon_insensitive’}, default=’epsilon_insensitive’     # noqa
 # kernel{‘linear’, ‘poly’, ‘rbf’, ‘sigmoid’, ‘precomputed’}, default=’rbf’
@@ -118,8 +118,6 @@ extra_tree_model_reg = ExtraTreesRegressor()
 # on various sub-samples of the dataset and uses averaging to improve the predictive accuracy and control over-fitting.
 
 
-
-
 """ Model6: GradientBoostingRegressor Model """
 grad_boost_model_reg = GradientBoostingRegressor()
 # Learning rate shrinks the contribution of each tree by learning_rate. There is a trade-off between learning_rate and n_estimators.    # noqa
@@ -128,7 +126,7 @@ grad_boost_model_reg = GradientBoostingRegressor()
 # If smaller than 1.0 this results in Stochastic Gradient Boosting. subsample interacts with the parameter n_estimators.    # noqa
 # Choosing subsample < 1.0 leads to a reduction of variance and an increase in bias.    # noqa
 
-""" Bias - Variance - Regularization """
+""" Bias - Variance - L1 and L2 Regularization """
 
 """ Pipeline """
 reg_pipeline = Pipeline([("regression", rf_model_reg)])
@@ -260,14 +258,14 @@ for i in range(len(train_file)):
         print(f"Final mean_squared_error is {mean_sqrd_err}")
         print(f"Root mean_squared_error is {root_mean_sqrd_err}")
 
-        # with open(model_dir_for_logs_and_h5+"lr_rf_svr_.txt", "a") as f:
-        #     f.write(f"For train file {i+1}, regressor type {model_names[j]}\n")
-        #     f.write(f"Final mean_absolute_error is {mean_abs_err}\n")
-        #     f.write(f"Final mean_squared_error is {mean_sqrd_err}\n")
-        #     f.write(f"Root mean_squared_error is {root_mean_sqrd_err}\n")
-        #     f.write("\n")
+        with open(logs_and_h5_path+"lr_rf_svr_.txt", "a") as f:
+            f.write(f"For train file {i+1}, regressor type {model_names[j]}\n")
+            f.write(f"Final mean_absolute_error is {mean_abs_err}\n")
+            f.write(f"Final mean_squared_error is {mean_sqrd_err}\n")
+            f.write(f"Root mean_squared_error is {root_mean_sqrd_err}\n")
+            f.write("\n")
 
-        dump(clf_reg, model_dir_for_logs_and_h5+f"clf_reg_{i+1}_{model_names[j]}.joblib")      # noqa
+        dump(clf_reg, logs_and_h5_path+f"clf_reg_{i+1}_{model_names[j]}.joblib")      # noqa
 
 
 

@@ -34,6 +34,7 @@ node{
         sh 'ls'
         sh 'echo Hello Classical Regression'
         sh 'python3 ./classical-reg/load_data.py'
+        sh 'python3 ./classical-reg/lr_rf_svr.py'
         
     }
     }
