@@ -155,7 +155,7 @@ model3_reg = {"regression": [rf_model_reg],
 model4_reg = {"regression": [svr_model_reg],
               "regression__C": [0.001, 0.01, 0.1, 1, 10],
               "regression__gamma": ['auto', 'scale'],
-              'regression__kernel': ['linear', 'poly', 'rbf', 'sigmoid', 'precomputed']}
+              'regression__kernel': ['linear', 'poly', 'rbf', 'sigmoid']}
 # degree int, default=3 (considered only if kernel=poly)
 # gamma{‘scale’, ‘auto’} or float, default=’scale’
 # C float, default=1.0 Regularization parameter.
@@ -259,6 +259,9 @@ for i in range(len(train_file)):
         print(f"Root mean_squared_error is {root_mean_sqrd_err}")
 
         with open(logs_and_h5_path+"lr_rf_svr_.txt", "a") as f:
+            if (i==0) and (j==0):
+                f.write("\n 000000000 This is a new simulation run")
+                
             f.write(f"For train file {i+1}, regressor type {model_names[j]}\n")
             f.write(f"Final mean_absolute_error is {mean_abs_err}\n")
             f.write(f"Final mean_squared_error is {mean_sqrd_err}\n")
