@@ -25,11 +25,17 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 start_time = datetime.datetime.now()
 
 model_dir = './' 
-logs_directory = "logs&h5-models"
+logs_directory = "logs-h5-models"
 path = os.path.join(model_dir, logs_directory)
 os.mkdir(path)
 
-if not ('train_FD001.txt' in os.listdir(model_dir)):
+
+
+if not ('CMAPSSData' in os.listdir(model_dir)):
+    data_directory = "CMAPSSData"
+    path = os.path.join(model_dir, logs_directory)
+    os.mkdir(path)
+
     # Download the file from `url` and save it locally under `file_name`:
     url1 = 'https://raw.githubusercontent.com/LahiruJayasinghe/RUL-Net/master/CMAPSSData/train_FD001.txt'
     url2 = 'https://raw.githubusercontent.com/LahiruJayasinghe/RUL-Net/master/CMAPSSData/train_FD002.txt'
@@ -44,18 +50,18 @@ if not ('train_FD001.txt' in os.listdir(model_dir)):
     url11 = 'https://raw.githubusercontent.com/LahiruJayasinghe/RUL-Net/master/CMAPSSData/RUL_FD003.txt'
     url12 = 'https://raw.githubusercontent.com/LahiruJayasinghe/RUL-Net/master/CMAPSSData/RUL_FD004.txt'
 
-    urllib.request.urlretrieve(url1, 'train_FD001.txt')
-    urllib.request.urlretrieve(url2, 'train_FD002.txt')
-    urllib.request.urlretrieve(url3, 'train_FD003.txt')
-    urllib.request.urlretrieve(url4, 'train_FD004.txt')
-    urllib.request.urlretrieve(url5, 'test_FD001.txt')
-    urllib.request.urlretrieve(url6, 'test_FD002.txt')
-    urllib.request.urlretrieve(url7, 'test_FD003.txt')
-    urllib.request.urlretrieve(url8, 'test_FD004.txt')
-    urllib.request.urlretrieve(url9, 'RUL_FD001.txt')
-    urllib.request.urlretrieve(url10, 'RUL_FD002.txt')
-    urllib.request.urlretrieve(url11, 'RUL_FD003.txt')
-    urllib.request.urlretrieve(url12, 'RUL_FD004.txt')
+    urllib.request.urlretrieve(url1, data_directory+'/train_FD001.txt')
+    urllib.request.urlretrieve(url2, data_directory+'/train_FD002.txt')
+    urllib.request.urlretrieve(url3, data_directory+'/train_FD003.txt')
+    urllib.request.urlretrieve(url4, data_directory+'/train_FD004.txt')
+    urllib.request.urlretrieve(url5, data_directory+'/test_FD001.txt')
+    urllib.request.urlretrieve(url6, data_directory+'/test_FD002.txt')
+    urllib.request.urlretrieve(url7, data_directory+'/test_FD003.txt')
+    urllib.request.urlretrieve(url8, data_directory+'/test_FD004.txt')
+    urllib.request.urlretrieve(url9, data_directory+'/RUL_FD001.txt')
+    urllib.request.urlretrieve(url10, data_directory+'/RUL_FD002.txt')
+    urllib.request.urlretrieve(url11, data_directory+'/RUL_FD003.txt')
+    urllib.request.urlretrieve(url12, data_directory+'/RUL_FD004.txt')
 
     print("data is downloaded")
 
