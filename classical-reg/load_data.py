@@ -33,7 +33,7 @@ if not ('logs-h5-models' in os.listdir(model_dir)):
 
 if not ('CMAPSSData' in os.listdir(model_dir)):
     data_directory = "CMAPSSData"
-    path = os.path.join(model_dir, logs_directory)
+    path = os.path.join(model_dir, data_directory)
     os.mkdir(path)
 
     # Download the file from `url` and save it locally under `file_name`:
