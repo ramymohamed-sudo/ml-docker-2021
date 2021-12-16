@@ -11,7 +11,9 @@ node{
         checkout scm
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
-        ml_type = 'CLASSICAL'
+        // ml_type = 'CLASSICAL'
+        ml_type = 'CNN'
+
     }
 
 
@@ -27,25 +29,44 @@ node{
 
         // OR build from Dockerfile  // from Dockerfile in "./"
         // customImage = docker.build("my-image:${env.BUILD_ID}", "./") 
+        if (ml_type == 'CLASSICAL') {
+            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/") 
+        }
+        else if (ml_type == 'CNN') {
+            // customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./CNN/") 
+            echo 'The CNN model is not ready yet'
+        }
+        else {
+            echo 'default case'
+        }
 
-            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/")  
             
         }
     
     stage('Run'){
 
             if (ml_type == 'CLASSICAL') {
-                echo 'I only execute on the master branch'
+                echo 'I Run the classical ML model'
                 customImage.inside {
                     sh 'ls'
                     sh 'echo Hello Classical Regression'
                     // sh 'python3 ./classical-reg/load_data.py'
                     // sh 'python3 ./classical-reg/lr_rf_svr.py'
             }
-            
             } 
+
+            else if (ml_type == 'CNN') {
+                echo 'I Run the classical ML model'
+                customImage.inside {
+                    sh 'ls'
+                    sh 'echo Hello CNN Regression'
+                    // sh 'python3 ./classical-reg/load_data.py'
+                    // sh 'python3 ./classical-reg/lr_rf_svr.py'
+            }
+            }
+
             else {
-                echo 'I execute elsewhere'
+                echo 'default case'
             }
                 
         
