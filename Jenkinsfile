@@ -34,31 +34,22 @@ node{
     
     stage('Run'){
 
-
-                
+            if (ml_type == 'CLASSICAL') {
+                echo 'I only execute on the master branch'
                 customImage.inside {
-                sh 'ls'
-                sh 'echo Hello Classical Regression'
-                // sh 'python3 ./classical-reg/load_data.py'
-                // sh 'python3 ./classical-reg/lr_rf_svr.py'
-                
-
+                    sh 'ls'
+                    sh 'echo Hello Classical Regression'
+                    // sh 'python3 ./classical-reg/load_data.py'
+                    // sh 'python3 ./classical-reg/lr_rf_svr.py'
             }
-
-
+            
+            } 
+            else {
+                echo 'I execute elsewhere'
+            }
+                
         
     }
    
     
 }
-
-
-
-
-// Jenkins Pipeline
-// checkout
-// Build
-// Test
-// Stagging
-// Production
-
