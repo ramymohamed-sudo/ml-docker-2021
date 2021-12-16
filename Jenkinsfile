@@ -56,9 +56,9 @@ node{
             } 
 
             else if (ml_type == 'CNN') {
-                echo 'I Run the CNN ML model when ready'
+                echo 'I Run the CNN ML model when it is ready'
             }
-            }
+            
 
             else {
                 echo 'default case'
