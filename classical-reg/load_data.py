@@ -113,10 +113,11 @@ def series_to_supervised(data, window_size=1, n_out=1, dropnan=True):
 
 
 def load_data(data_path):
-    operational_settings = ['setting{}'.format(i + 1) for i in range(3)]
-    sensor_columns = ['s{}'.format(i + 1) for i in range(26)]
-    cols = ['engine_id', 'cycle'] + operational_settings + sensor_columns
-    data = pd.read_csv(data_path, sep=' ', header=None, names=cols)
+    # operational_settings = ['setting{}'.format(i + 1) for i in range(3)]
+    # sensor_columns = ['s{}'.format(i + 1) for i in range(26)]
+    # cols = ['engine_id', 'cycle'] + operational_settings + sensor_columns
+
+    data = pd.read_csv(data_path, sep=' ', header=None, names=names)
     data = data.drop(cols_to_drop, axis=1)
     # data['index'] = data.index
     # data.index = data['index']
