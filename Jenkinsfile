@@ -56,12 +56,7 @@ node{
             } 
 
             else if (ml_type == 'CNN') {
-                echo 'I Run the classical ML model'
-                customImage.inside {
-                    sh 'ls'
-                    sh 'echo Hello CNN Regression'
-                    // sh 'python3 ./classical-reg/load_data.py'
-                    // sh 'python3 ./classical-reg/lr_rf_svr.py'
+                echo 'I Run the CNN ML model when ready'
             }
             }
 
