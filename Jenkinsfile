@@ -38,7 +38,7 @@ node{
         }
         else if (ml_type == 'RNN') {
             echo 'The RNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/")  
+            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./rnn/")  
         }
         else {
             echo 'default case'
@@ -69,10 +69,10 @@ node{
                     sh 'ls'
                     sh 'echo Hello RNN-based Regression'
                     echo 'run from classical folder ??'
-                    sh 'python3 ./classical-reg/load_data_4_files_1D_2D.py'
-                    sh 'python3 ./classical-reg/ rnn_1layer_2D.py'
-                    // sh 'python3 ./classical-reg/load_data.py'
-                    // sh 'python3 ./classical-reg/lr_rf_svr.py'
+                    // sh 'python3 ./classical-reg/load_data_4_files_1D_2D.py'
+                    // sh 'python3 ./classical-reg/rnn_1layer_2D.py'
+                    sh 'python3 ./rnn/load_data.py'
+                    sh 'python3 ./rnn/lr_rf_svr.py'
             }
             }
 
