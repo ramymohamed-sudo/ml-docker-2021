@@ -34,7 +34,7 @@ node{
         }
         else if (ml_type == 'CNN') {
             echo 'The CNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./CNN/") 
+            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/") 
         }
         else if (ml_type == 'RNN') {
             echo 'The RNN model is is use'
@@ -47,7 +47,7 @@ node{
         }
     
 
-    stage('Run'){
+    stage('TEST'){                  // TEST FIREFOX and EDGE
 
             if (ml_type == 'CLASSICAL') {
                 echo 'I Run the classical ML model'
@@ -81,6 +81,15 @@ node{
             }
                 
         
+    }
+
+
+    stage('STAGING'){
+        echo 'STAGING stage in Jenkins'
+    }
+
+    stage('PRODUCTION'){
+        echo 'PRODUCTION stage in Jenkins'
     }
    
     
