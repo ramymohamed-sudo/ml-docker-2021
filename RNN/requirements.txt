@@ -1,0 +1,8 @@
+
+
+
+pandas
+flask
+matplotlib
+sklearn
+requests

@@ -12,7 +12,7 @@ node{
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
-        ml_type = 'CNN'
+        ml_type = 'RNN'
 
     }
 
@@ -33,16 +33,20 @@ node{
             customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/") 
         }
         else if (ml_type == 'CNN') {
-            // customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./CNN/") 
-            echo 'The CNN model is not ready yet'
+            echo 'The CNN model is is use'
+            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./CNN/") 
+        }
+        else if (ml_type == 'RNN') {
+            echo 'The RNN model is is use'
+            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./RNN/")  
         }
         else {
             echo 'default case'
         }
 
-            
         }
     
+
     stage('Run'){
 
             if (ml_type == 'CLASSICAL') {
@@ -58,7 +62,16 @@ node{
             else if (ml_type == 'CNN') {
                 echo 'I Run the CNN ML model when it is ready'
             }
-            
+
+            else if (ml_type == 'RNN') {
+                echo 'I Run the CNN ML model'
+                customImage.inside {
+                    sh 'ls'
+                    sh 'echo Hello RNN-based Regression'
+                    sh 'python3 ./RNN/load_data_4_files_1D_2D.py'
+                    sh 'python3 ./RNN/ rnn_1layer_2D.py'
+            }
+            }
 
             else {
                 echo 'default case'
