@@ -33,15 +33,20 @@ node{
             echo 'The RNN model is is use'
             customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./rnn/")  
         }
+
         else if (ml_type == 'PULL_KERAS') {
-            // Build from image        
-            def myTestContainer = docker.image('ramyrr/machinelearning_keras:latest')
+            // Build from image
+            def myTestContainer
+            docker.withRegistry('https://index.docker.io/v1/', '7ec5aa2d-ed10-4282-ba0a-527c27a55a11') {
+            myTestContainer = docker.image('ramyrr/machinelearning_keras:latest')
             myTestContainer.pull()
             myTestContainer.inside{
                     sh 'ls'
+                    sh 'I need to check original files versus file copied to the container'
                     sh 'echo Hello RNN-based Regression inside the docker'
                     sh 'python3 ./rnn/load_data_4_files_1D_2D.py'
                     sh 'python3 ./rnn/rnn_one_layer_2D.py'
+            }
             }
         }
 
@@ -49,7 +54,7 @@ node{
             echo 'default case'
         }
 
-        }
+    }
     
 
     stage('TEST'){                  // TEST FIREFOX and EDGE
@@ -107,3 +112,10 @@ node{
    
     
 }
+
+
+// Stage build image -> then push with updated commit 
+// Stage just PULL the image -> create the container from this image 
+// - check original files in the image versus files copied to the docker container 
+// Ask Mahmoud - is the python script inherent to the image pushed on docker or not
+// what is the stagging stage
