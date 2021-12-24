@@ -10,7 +10,7 @@ node{
     stage('Preparation'){
         checkout scm
         sh 'git rev-parse --short HEAD > .git/commit-id'  
-        commit_id = readFile('.git/commit-id').trim()
+        commit_id = '6fbc9d4'     // readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
         ml_type = 'RNN'
 
