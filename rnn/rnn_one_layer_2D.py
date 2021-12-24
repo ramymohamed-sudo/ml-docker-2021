@@ -42,10 +42,10 @@ dropout_rate = 0.5
 # n_FC = 100
 batch_size = 512
 MODEL = 'MODULAR'   # 'FUNC'
-ARCH = 'CNN'    # "LSTM" "CLASSIC" ...
+ARCH = 'RNN'    # "LSTM" "CLASSIC" ...
 
 
-model_dir = '../'
+model_dir = './'
 file_path = model_dir + 'CMAPSSData/'
 if not ('CMAPSSData' in os.listdir(model_dir)):
     file_path = './scripts/CMAPSSData/'
