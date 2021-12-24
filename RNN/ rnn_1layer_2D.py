@@ -29,6 +29,7 @@ from numpy.random import seed
 seed(42)
 tf.random.set_seed(42)
 
+sys.exit()
 
 """ .......... Data preprocesing """
 N_ft = 15
