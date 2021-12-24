@@ -10,7 +10,7 @@ node{
     stage('Preparation'){
         checkout scm
         sh 'git rev-parse --short HEAD > .git/commit-id'  
-        commit_id = '6fbc9d4'     // readFile('.git/commit-id').trim()
+        commit_id = readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
         ml_type = 'RNN'
 
@@ -30,15 +30,15 @@ node{
         // OR build from Dockerfile  // from Dockerfile in "./"
         // customImage = docker.build("my-image:${env.BUILD_ID}", "./") 
         if (ml_type == 'CLASSICAL') {
-            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/") 
+            customImage = docker.build("ramyrr/machinelearning:sklearn:${commit_id}", "./classical-reg/") 
         }
         else if (ml_type == 'CNN') {
             echo 'The CNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./classical-reg/") 
+            customImage = docker.build("ramyrr/machinelearning:keras:${commit_id}", "./classical-reg/") 
         }
         else if (ml_type == 'RNN') {
             echo 'The RNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning:${commit_id}", "./rnn/")  
+            customImage = docker.build("ramyrr/machinelearning:keras:${commit_id}", "./rnn/")  
         }
         else {
             echo 'default case'
@@ -85,6 +85,16 @@ node{
     stage('STAGING'){
         echo 'STAGING stage in Jenkins'
     }
+
+
+    stage('Push'){
+        echo 'PUSH stage in Jenkins'
+        docker.withRegistry('https://index.docker.io/v1/', '7ec5aa2d-ed10-4282-ba0a-527c27a55a11'){  
+            // 'dockerhub'   replaced with '7ec5aa2d-ed10-4282-ba0a-527c27a55a11'
+            // def app = docker.build("ramyrr/machinelearning:${commit_id}", '.').push()            
+            customImage.push()
+        }
+    }  
 
     stage('PRODUCTION'){
         echo 'PRODUCTION stage in Jenkins'
