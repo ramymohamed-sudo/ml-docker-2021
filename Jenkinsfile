@@ -69,7 +69,7 @@ node{
                     sh 'ls'
                     sh 'echo Hello RNN-based Regression'
                     sh 'python3 ./rnn/load_data_4_files_1D_2D.py'
-                    sh 'python3 ./rnn/rnn_1layer_2D.py'
+                    sh 'python3 ./rnn/rnn_one_layer_2D.py'
 
             }
             }

@@ -6,4 +6,4 @@ flask
 matplotlib
 sklearn
 requests
-tensorflow
+
