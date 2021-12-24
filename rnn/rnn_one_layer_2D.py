@@ -29,7 +29,6 @@ from numpy.random import seed
 seed(42)
 tf.random.set_seed(42)
 
-sys.exit()
 
 """ .......... Data preprocesing """
 N_ft = 15
@@ -38,7 +37,7 @@ dim1_list = [30, 20, 30, 15]     # or FD001 to FD004
 learning_rate = 0.001  # then 0.0001
 F_N = 10    # FN ﬁlters are used in each layer
 F_L = 4     # and the ﬁlter size is FL× 1
-epochs = 2    # 250   500
+epochs = 1    # 250   500
 dropout_rate = 0.5
 # n_FC = 100
 batch_size = 512
@@ -168,7 +167,7 @@ for i in range(len(train_file)):
                             project_name="rnn_1layer",)
 
     print("tuner.search_space_summary()", tuner.search_space_summary())
-    tuner.search(train_X, train_y, epochs=100,
+    tuner.search(train_X, train_y, epochs=epochs,
                  validation_data=(test_X_RUL, test_y_RUL),
                  callbacks=[StoreModelHistory()],
                  verbose=2,
