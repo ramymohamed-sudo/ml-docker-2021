@@ -7,7 +7,7 @@ node{
     def customImage
     def ml_type
 
-    stage('Preparation'){
+    stage('CHECKOUT'){
         checkout scm
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
@@ -18,7 +18,7 @@ node{
     }
 
 
-    stage('Build'){
+    stage('BUILD'){
 
         // OR build from Dockerfile  // from Dockerfile in "./"
         // customImage = docker.build("my-image:${env.BUILD_ID}", "./") 
