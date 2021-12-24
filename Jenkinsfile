@@ -42,8 +42,8 @@ node{
             myTestContainer.pull()
             myTestContainer.inside{
                     sh 'ls'
-                    sh 'I need to check original files versus file copied to the container'
-                    sh 'echo Hello RNN-based Regression inside the docker'
+                    echo 'I need to check original files versus file copied to the container'
+                    echo 'Hello RNN-based Regression inside the docker'
                     sh 'python3 ./rnn/load_data_4_files_1D_2D.py'
                     sh 'python3 ./rnn/rnn_one_layer_2D.py'
             }
