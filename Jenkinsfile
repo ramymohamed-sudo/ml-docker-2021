@@ -30,15 +30,15 @@ node{
         // OR build from Dockerfile  // from Dockerfile in "./"
         // customImage = docker.build("my-image:${env.BUILD_ID}", "./") 
         if (ml_type == 'CLASSICAL') {
-            customImage = docker.build("ramyrr/machinelearning:sklearn:${commit_id}", "./classical-reg/") 
+            customImage = docker.build("ramyrr/machinelearning_sklearn:${commit_id}", "./classical-reg/") 
         }
         else if (ml_type == 'CNN') {
             echo 'The CNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning:keras:${commit_id}", "./classical-reg/") 
+            customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./classical-reg/") 
         }
         else if (ml_type == 'RNN') {
             echo 'The RNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning:keras:${commit_id}", "./rnn/")  
+            customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./rnn/")  
         }
         else {
             echo 'default case'
