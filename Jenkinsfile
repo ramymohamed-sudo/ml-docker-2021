@@ -38,7 +38,7 @@ node{
             // Build from image
             def myTestContainer
             docker.withRegistry('https://index.docker.io/v1/', '7ec5aa2d-ed10-4282-ba0a-527c27a55a11') {
-            myTestContainer = docker.image('ramyrr/machinelearning_keras:latest')
+            myTestContainer = docker.image('ramyrr/machinelearning_keras:fc6408f')
             myTestContainer.pull()
             myTestContainer.inside{
                     sh 'ls'
