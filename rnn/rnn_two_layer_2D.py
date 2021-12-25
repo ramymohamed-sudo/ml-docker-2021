@@ -18,7 +18,7 @@ import tensorflow as tf
 tf.keras.backend.clear_session()
 from tensorflow import keras
 from tensorflow.keras.layers import LSTM, Dropout, MaxPooling1D, Conv1D
-from tensorflow.keras.layers import Activation, Dense, Flatten
+from tensorflow.keras.layers import Activation, Dense, Flatten, Bidirectional
 from tensorflow.keras.models import Sequential, Model
 import keras.backend as K
 import keras_tuner as kt
@@ -100,8 +100,12 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
         model = Sequential()
         model.add(LSTM(units=units,
                        input_shape=(dim2, dim3),
+                       return_sequences=True,
+                       activation=activation_rnn))
+        model.add(LSTM(units=units,
                        return_sequences=False,
                        activation=activation_rnn))
+                
         if dropout:
             model.add(Dropout(rate=dropout_rate))
 
@@ -194,12 +198,14 @@ for i in range(len(train_file)):
     print("bestModels", bestModels)
     highestScoreModel = bestModels[0]
     print("highestScoreModel.summary()", highestScoreModel.summary())
-    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
     
     # keras.utils.plot_model(model, "LSTM.png")
     # plt.show()
     # for layer in model.layers:
     # print(layer.output_shape)
+
+    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
 
 
 

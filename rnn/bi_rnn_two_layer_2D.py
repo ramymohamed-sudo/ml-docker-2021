@@ -7,7 +7,6 @@ import sys
 import csv
 from matplotlib import pyplot as plt
 import time
-import math
 import datetime
 from tensorflow.python.keras.engine.input_layer import Input
 from load_data_4_files_1D_2D import load_train_data, load_test_data, normalize_data
@@ -99,10 +98,14 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
         print("dim2", dim2)
         dim3 = N_ft
         model = Sequential()
-        model.add(LSTM(units=units,
+        model.add(Bidirectional(LSTM(units=units,
                        input_shape=(dim2, dim3),
-                       return_sequences=False,
-                       activation=activation_rnn))
+                       return_sequences=True,
+                       activation=activation_rnn)))
+        model.add(Bidirectional(LSTM(units=units,
+                       return_sequences=True,
+                       activation=activation_rnn)))
+                
         if dropout:
             model.add(Dropout(rate=dropout_rate))
 
@@ -143,18 +146,6 @@ def model_tuner(hp):
     model = model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout)
 
     return model
-
-def scoring_func(test_y_RUL, test_y_pred):
-    N = test_y_RUL.shape[0]
-    d_i_N = test_y_pred - test_y_RUL
-    s_i_N = 0
-    for i, d_i in enumerate(d_i_N):
-        if d_i >= 0:
-            s_i_N += math.exp(d_i/10) - 1
-        else:
-            s_i_N += math.exp(-d_i/13) - 1
-    
-    return s_i_N
 
 
 for i in range(len(train_file)):
@@ -205,10 +196,6 @@ for i in range(len(train_file)):
     
     bestModels = tuner.get_best_models(num_models=1)
     print("bestModels", bestModels)
-    test_y_pred = bestModels.predict(test_X_RUL)
-    print("shape of test_y_pred", test_y_pred.shape)
-    score = scoring_func(test_y_RUL, test_y_pred)
-
     highestScoreModel = bestModels[0]
     print("highestScoreModel.summary()", highestScoreModel.summary())
     
