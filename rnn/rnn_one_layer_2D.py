@@ -148,12 +148,12 @@ def scoring_func(test_y_RUL, test_y_pred):
     N = test_y_RUL.shape[0]
     d_i_N = test_y_pred - test_y_RUL
     s_i_N = 0
-    for i, d_i in enumerate(d_i_N):
-        if d_i >= 0:
-            s_i_N += math.exp(d_i/10) - 1
+    for i in range(N):
+        if d_i_N[i] >= 0:
+            s_i_N += math.exp(d_i_N[i]/10) - 1
         else:
-            s_i_N += math.exp(-d_i/13) - 1
-    
+            s_i_N += math.exp(-d_i_N[i]/13) - 1
+            
     return s_i_N
 
 
