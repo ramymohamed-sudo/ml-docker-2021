@@ -146,14 +146,15 @@ def model_tuner(hp):
 
 def scoring_func(test_y_RUL, test_y_pred):
     N = test_y_RUL.shape[0]
-    d_i_N = test_y_pred - test_y_RUL
+    d_i_N = test_y_pred.flatten() - test_y_RUL
+    print("d_i_N.shape", d_i_N.shape)
     s_i_N = 0
     for i in range(N):
         if d_i_N[i] >= 0:
             s_i_N += math.exp(d_i_N[i]/10) - 1
         else:
             s_i_N += math.exp(-d_i_N[i]/13) - 1
-            
+
     return s_i_N
 
 
