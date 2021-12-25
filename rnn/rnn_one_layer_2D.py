@@ -194,7 +194,7 @@ for i in range(len(train_file)):
     bestModels = tuner.get_best_models(num_models=1)
     print("bestModels", bestModels)
     highestScoreModel = bestModels[0]
-    print("highestScoreModel", highestScoreModel)
+    print("highestScoreModel.summary()", highestScoreModel.summary())
     
     # keras.utils.plot_model(model, "LSTM.png")
     # plt.show()
