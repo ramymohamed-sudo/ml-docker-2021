@@ -39,7 +39,7 @@ dim1_list = [30, 20, 30, 15]     # or FD001 to FD004
 learning_rate = 0.001  # then 0.0001
 F_N = 10    # FN ﬁlters are used in each layer
 F_L = 4     # and the ﬁlter size is FL× 1
-epochs = 1    # 250   500
+epochs = 100    # 250   500
 dropout_rate = 0.5
 # n_FC = 100
 batch_size = 512
@@ -188,8 +188,6 @@ for i in range(len(train_file)):
                  callbacks= callback_list,      # [StoreModelHistory()]
                  verbose=2,
                  shuffle=True)
-
-    print(model.summary())
     
     bestModels = tuner.get_best_models(num_models=1)
     print("bestModels", bestModels)
