@@ -1,5 +1,5 @@
 # FROM jupyter/scipy-notebook
-FROM ramyrr/machinelearning_keras:latest
+FROM ramyrr/machinelearning_keras:fc6408f
 # python:latest
 # smizy/scikit-learn
 # jupyter/scipy-notebook

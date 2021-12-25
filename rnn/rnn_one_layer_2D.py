@@ -11,6 +11,8 @@ import datetime
 from tensorflow.python.keras.engine.input_layer import Input
 from load_data_4_files_1D_2D import load_train_data, load_test_data, normalize_data
 
+from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
+
 from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 tf.keras.backend.clear_session()
@@ -53,6 +55,7 @@ if not ('CMAPSSData' in os.listdir(model_dir)):
 logs_and_h5_path = model_dir+'logs-h5-models/'
 if not ('logs-h5-models' in os.listdir(model_dir)):
     logs_and_h5_path = './scripts/logs-h5-models/'
+print("logs_and_h5_path", logs_and_h5_path)
 
 train_file = [file_path+f"train_FD00{i}.txt" for i in [1, 2, 3, 4]]
 test_file = [file_path+f"test_FD00{i}.txt" for i in [1, 2, 3, 4]]
@@ -65,14 +68,27 @@ class StoreModelHistory(keras.callbacks.Callback):
             logs.setdefault('lr', 0)
             logs['lr'] = K.get_value(self.model.optimizer.lr)
 
-        if not (f'cnn_with_scale_epochs_{epochs}.csv' in os.listdir(logs_and_h5_path)):     # noqa
-            with open(logs_and_h5_path+f'cnn_with_scale_epochs_{epochs}.csv','a') as f:     # noqa
+        if not (f'rnn_with_scale_epochs_{epochs}.csv' in os.listdir(logs_and_h5_path)):     # noqa
+            with open(logs_and_h5_path+f'rnn_with_scale_epochs_{epochs}.csv','a') as f:     # noqa
                 y = csv.DictWriter(f, logs.keys())
                 y.writeheader()
 
-        with open(logs_and_h5_path+f'cnn_with_scale_epochs_{epochs}.csv','a') as f:     # noqa
+        with open(logs_and_h5_path+f'rnn_with_scale_epochs_{epochs}.csv','a') as f:     # noqa
             y = csv.DictWriter(f, logs.keys())
             y.writerow(logs)
+
+
+es_callback = EarlyStopping(monitor="val_root_mean_squared_error",
+                                      verbose=1,
+                                      patience=50,
+                                      mode="auto",
+                                      baseline=None,
+                                      restore_best_weights=False)
+mc_callback = ModelCheckpoint('best_model.h5',
+                               monitor='val_root_mean_squared_error',
+                               save_best_only=True)
+
+callback_list = [StoreModelHistory(), es_callback, mc_callback]
 
 
 def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout, MODEL=MODEL):
@@ -169,7 +185,7 @@ for i in range(len(train_file)):
     print("tuner.search_space_summary()", tuner.search_space_summary())
     tuner.search(train_X, train_y, epochs=epochs,
                  validation_data=(test_X_RUL, test_y_RUL),
-                 callbacks=[StoreModelHistory()],
+                 callbacks= callback_list,      # [StoreModelHistory()]
                  verbose=2,
                  shuffle=True)
 

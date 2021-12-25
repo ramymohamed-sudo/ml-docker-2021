@@ -8,3 +8,4 @@ sklearn
 requests
 tensorflow
 keras-tuner
+h5py
