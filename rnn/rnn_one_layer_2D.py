@@ -40,7 +40,7 @@ dim1_list = [30, 20, 30, 15]     # or FD001 to FD004
 learning_rate = 0.001  # then 0.0001
 F_N = 10    # FN ﬁlters are used in each layer
 F_L = 4     # and the ﬁlter size is FL× 1
-epochs = 1    # 250   500
+epochs = 100    # 250   500
 dropout_rate = 0.5
 # n_FC = 100
 batch_size = 512
@@ -147,7 +147,6 @@ def model_tuner(hp):
 def scoring_func(test_y_RUL, test_y_pred):
     N = test_y_RUL.shape[0]
     d_i_N = test_y_pred.flatten() - test_y_RUL
-    print("d_i_N.shape", d_i_N.shape)
     s_i_N = 0
     for i in range(N):
         if d_i_N[i] >= 0:
@@ -209,9 +208,8 @@ for i in range(len(train_file)):
     highestScoreModel = bestModels[0]
 
     test_y_pred = highestScoreModel.predict(test_X_RUL)
-    print("shape of test_y_pred", test_y_pred.shape)
     score = scoring_func(test_y_RUL, test_y_pred)
-    print("score", score)
+    print("score is: ", score)
 
     print("highestScoreModel.summary()", highestScoreModel.summary())
     
