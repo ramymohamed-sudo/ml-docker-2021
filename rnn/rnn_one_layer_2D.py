@@ -80,7 +80,7 @@ class StoreModelHistory(keras.callbacks.Callback):
 
 es_callback = EarlyStopping(monitor="val_root_mean_squared_error",
                                       verbose=1,
-                                      patience=50,
+                                      patience=5,
                                       mode="auto",
                                       baseline=None,
                                       restore_best_weights=False)
@@ -187,6 +187,7 @@ for i in range(len(train_file)):
                  validation_data=(test_X_RUL, test_y_RUL),
                  callbacks= callback_list,      # [StoreModelHistory()]
                  verbose=2,
+                 batch_size = batch_size,
                  shuffle=True)
     
     bestModels = tuner.get_best_models(num_models=1)
