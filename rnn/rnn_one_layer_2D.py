@@ -205,12 +205,13 @@ for i in range(len(train_file)):
     
     bestModels = tuner.get_best_models(num_models=1)
     print("bestModels", bestModels)
-    test_y_pred = bestModels.predict(test_X_RUL)
+    highestScoreModel = bestModels[0]
+
+    test_y_pred = highestScoreModel.predict(test_X_RUL)
     print("shape of test_y_pred", test_y_pred.shape)
     score = scoring_func(test_y_RUL, test_y_pred)
     print("score", score)
 
-    highestScoreModel = bestModels[0]
     print("highestScoreModel.summary()", highestScoreModel.summary())
     
     # keras.utils.plot_model(model, "LSTM.png")
