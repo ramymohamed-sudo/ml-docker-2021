@@ -80,7 +80,7 @@ class StoreModelHistory(keras.callbacks.Callback):
 
 es_callback = EarlyStopping(monitor="val_root_mean_squared_error",
                                       verbose=1,
-                                      patience=5,
+                                      patience=20,
                                       mode="auto",
                                       baseline=None,
                                       restore_best_weights=False)
