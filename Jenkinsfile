@@ -97,6 +97,7 @@ node{
     }
 
 
+    // I think I need to add a condition to push if the image is updated, e.g., h5py installed ??
     // stage('Push'){
     //     echo 'PUSH stage in Jenkins'
     //     docker.withRegistry('https://index.docker.io/v1/', '7ec5aa2d-ed10-4282-ba0a-527c27a55a11'){  

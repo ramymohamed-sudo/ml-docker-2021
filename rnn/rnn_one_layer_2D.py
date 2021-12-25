@@ -180,7 +180,7 @@ for i in range(len(train_file)):
                             executions_per_trial=2,
                             overwrite=True,
                             directory=logs_and_h5_path,
-                            project_name="rnn_1layer",)
+                            project_name="rnn__one_layer",)
 
     print("tuner.search_space_summary()", tuner.search_space_summary())
     tuner.search(train_X, train_y, epochs=epochs,
@@ -190,6 +190,12 @@ for i in range(len(train_file)):
                  shuffle=True)
 
     print(model.summary())
+    
+    bestModels = tuner.get_best_models(num_models=1)
+    print("bestModels", bestModels)
+    highestScoreModel = bestModels[0]
+    print("highestScoreModel", highestScoreModel)
+    
     # keras.utils.plot_model(model, "LSTM.png")
     # plt.show()
     # for layer in model.layers:
