@@ -199,7 +199,6 @@ for i in range(len(train_file)):
     # plt.show()
     # for layer in model.layers:
     # print(layer.output_shape)
-    sys.exit()
 
 
 
