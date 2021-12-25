@@ -106,7 +106,7 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
             model.add(Dropout(rate=dropout_rate))
 
         model.add(Dense(units=n_FC, activation=activation_dense))
-        model.add(Dense(1, activaticlaon=None))
+        model.add(Dense(1, activation=None))
         opt = keras.optimizers.Adam(learning_rate=lr)
         model.compile(loss='mse', optimizer=opt,        # 'adam'
                         metrics=['mean_absolute_error', 'RootMeanSquaredError'])      # noqa
@@ -194,13 +194,12 @@ for i in range(len(train_file)):
     print("bestModels", bestModels)
     highestScoreModel = bestModels[0]
     print("highestScoreModel.summary()", highestScoreModel.summary())
+    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
     
     # keras.utils.plot_model(model, "LSTM.png")
     # plt.show()
     # for layer in model.layers:
     # print(layer.output_shape)
-
-    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
 
 
 
