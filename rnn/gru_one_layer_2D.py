@@ -7,6 +7,7 @@ import sys
 import csv
 from matplotlib import pyplot as plt
 import time
+import math
 import datetime
 from tensorflow.python.keras.engine.input_layer import Input
 from load_data_4_files_1D_2D import load_train_data, load_test_data, normalize_data
@@ -17,7 +18,7 @@ from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 tf.keras.backend.clear_session()
 from tensorflow import keras
-from tensorflow.keras.layers import LSTM, Dropout, MaxPooling1D, Conv1D
+from tensorflow.keras.layers import LSTM, Dropout, MaxPooling1D, Conv1D, GRU
 from tensorflow.keras.layers import Activation, Dense, Flatten, Bidirectional
 from tensorflow.keras.models import Sequential, Model
 import keras.backend as K
@@ -98,14 +99,10 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
         print("dim2", dim2)
         dim3 = N_ft
         model = Sequential()
-        model.add(LSTM(units=units,
+        model.add(GRU(units=units,
                        input_shape=(dim2, dim3),
-                       return_sequences=True,
-                       activation=activation_rnn))
-        model.add(LSTM(units=units,
                        return_sequences=False,
                        activation=activation_rnn))
-                
         if dropout:
             model.add(Dropout(rate=dropout_rate))
 
@@ -122,14 +119,14 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
         dim3 = N_ft
         (T, D) = (dim2, N_ft)
         inputs = Input(shape=(T, D))
-        x = LSTM(LSTM(units=units,
+        x = GRU(GRU(units=units,
                       input_shape=(dim2, dim3),
                       return_sequences=False,
                       activation=activation_rnn))(inputs)
 
         x = Dense(n_FC, activation=activation_dense)(x)
         outputs = Dense(1, activation=None)(x)
-        model = Model(inputs=inputs, outputs=outputs, name="lstm_1l_model")             # noqa
+        model = Model(inputs=inputs, outputs=outputs, name="gru_1l_model")             # noqa
 
     return model
 
@@ -146,6 +143,18 @@ def model_tuner(hp):
     model = model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout)
 
     return model
+
+def scoring_func(test_y_RUL, test_y_pred):
+    N = test_y_RUL.shape[0]
+    d_i_N = test_y_pred.flatten() - test_y_RUL
+    s_i_N = 0
+    for i in range(N):
+        if d_i_N[i] >= 0:
+            s_i_N += math.exp(d_i_N[i]/10) - 1
+        else:
+            s_i_N += math.exp(-d_i_N[i]/13) - 1
+
+    return s_i_N
 
 
 for i in range(len(train_file)):
@@ -197,9 +206,14 @@ for i in range(len(train_file)):
     bestModels = tuner.get_best_models(num_models=1)
     print("bestModels", bestModels)
     highestScoreModel = bestModels[0]
+
+    test_y_pred = highestScoreModel.predict(test_X_RUL)
+    score = scoring_func(test_y_RUL, test_y_pred)
+    print("score is: ", score)
+
     print("highestScoreModel.summary()", highestScoreModel.summary())
     
-    # keras.utils.plot_model(model, "LSTM.png")
+    # keras.utils.plot_model(model, "GRU.png")
     # plt.show()
     # for layer in model.layers:
     # print(layer.output_shape)

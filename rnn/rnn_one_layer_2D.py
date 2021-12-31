@@ -18,7 +18,7 @@ from sklearn.preprocessing import MinMaxScaler
 import tensorflow as tf
 tf.keras.backend.clear_session()
 from tensorflow import keras
-from tensorflow.keras.layers import LSTM, Dropout, MaxPooling1D, Conv1D
+from tensorflow.keras.layers import LSTM, Dropout, MaxPooling1D, Conv1D, GRU
 from tensorflow.keras.layers import Activation, Dense, Flatten, Bidirectional
 from tensorflow.keras.models import Sequential, Model
 import keras.backend as K
