@@ -79,9 +79,21 @@ node{
                     sh 'ls'
                     sh 'echo Hello RNN-based Regression'
                     sh 'python3 ./rnn/load_data_4_files_1D_2D.py'
+                    
+                    // sh 'echo now we RUN 1-Layer LSTM'
                     // sh 'python3 ./rnn/rnn_one_layer_2D.py'
-                    sh 'echo now we RUN 1-Layer GRU'
-                    sh 'python3 ./rnn/gru_one_layer_2D.py'
+                    // sh 'echo now we RUN 1-Layer GRU'
+                    // sh 'python3 ./rnn/gru_one_layer_2D.py'
+
+                    sh 'echo now we RUN 2-Layers LSTM' 
+                    sh 'python3 ./rnn/rnn_two_layer_2D.py'
+                    sh 'echo now we RUN 2-Layers GRU'
+                    sh 'python3 ./rnn/gru_two_layer_2D.py'
+
+                    // sh 'echo now we RUN 3-Layers LSTM' 
+                    // sh 'python3 ./rnn/rnn_three_layer_2D.py'
+                    // sh 'echo now we RUN 3-Layers GRU'
+                    // sh 'python3 ./rnn/gru_three_layer_2D.py'
 
             }
             }

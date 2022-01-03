@@ -218,8 +218,8 @@ for i in range(len(train_file)):
     # for layer in model.layers:
     # print(layer.output_shape)
 
-    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
-    print(f" 0000000000000000000 end of file number {i+1} 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} for GRU 1 layer 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} for GRU 1 layer 0000000000000000000")
 
 
 

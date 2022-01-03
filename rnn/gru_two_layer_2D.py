@@ -45,7 +45,7 @@ dropout_rate = 0.5
 # n_FC = 100
 batch_size = 512
 MODEL = 'MODULAR'   # 'FUNC'
-ARCH = 'RNN'    # "LSTM" "CLASSIC" ...
+ARCH = 'RNN'    # "CLASSIC" ...
 
 
 model_dir = './'
@@ -99,8 +99,11 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
         print("dim2", dim2)
         dim3 = N_ft
         model = Sequential()
-        model.add(LSTM(units=units,
+        model.add(GRU(units=units,
                        input_shape=(dim2, dim3),
+                       return_sequences=True,
+                       activation=activation_rnn))
+        model.add(GRU(units=units,
                        return_sequences=False,
                        activation=activation_rnn))
         if dropout:
@@ -119,14 +122,14 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
         dim3 = N_ft
         (T, D) = (dim2, N_ft)
         inputs = Input(shape=(T, D))
-        x = LSTM(LSTM(units=units,
+        x = GRU(GRU(units=units,
                       input_shape=(dim2, dim3),
                       return_sequences=False,
                       activation=activation_rnn))(inputs)
 
         x = Dense(n_FC, activation=activation_dense)(x)
         outputs = Dense(1, activation=None)(x)
-        model = Model(inputs=inputs, outputs=outputs, name="lstm_1l_model")             # noqa
+        model = Model(inputs=inputs, outputs=outputs, name="gru_2l_model")             # noqa
 
     return model
 
@@ -213,13 +216,13 @@ for i in range(len(train_file)):
 
     print("highestScoreModel.summary()", highestScoreModel.summary())
     
-    # keras.utils.plot_model(model, "LSTM.png")
+    # keras.utils.plot_model(model, "GRU.png")
     # plt.show()
     # for layer in model.layers:
     # print(layer.output_shape)
 
-    print(f" 0000000000000000000 end of file number {i+1} for LSTM 1 layer 0000000000000000000")
-    print(f" 0000000000000000000 end of file number {i+1} for LSTM 1 layer 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} for GRU 2 layers 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} for GRU 2 layers 0000000000000000000")
 
 
 
