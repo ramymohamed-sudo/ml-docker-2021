@@ -17,7 +17,6 @@ node{
 
     }
 
-
     stage('BUILD'){
 
         // OR build from Dockerfile  // from Dockerfile in "./"

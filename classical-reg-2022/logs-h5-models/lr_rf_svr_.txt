@@ -1,0 +1,21 @@
+
+ 000000000 This is a new simulation runFor train file 1, regressor type LinearRegression
+Final mean_absolute_error is 16.50815773010254
+Final mean_squared_error is 414.5323486328125
+Root mean_squared_error is 20.360067500693912
+
+For train file 2, regressor type LinearRegression
+Final mean_absolute_error is 16.617950439453125
+Final mean_squared_error is 427.4562683105469
+Root mean_squared_error is 20.67501555768573
+
+For train file 3, regressor type LinearRegression
+Final mean_absolute_error is 17.1593017578125
+Final mean_squared_error is 466.4295654296875
+Root mean_squared_error is 21.59698047018813
+
+For train file 4, regressor type LinearRegression
+Final mean_absolute_error is 18.513072967529297
+Final mean_squared_error is 529.9793090820312
+Root mean_squared_error is 23.021279484034576
+
