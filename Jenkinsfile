@@ -12,7 +12,8 @@ node{
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
-        ml_type = 'RNN'
+        ml_type = 'CLASSICAL'
+        // ml_type = 'RNN'
         // ml_type = 'PULL_KERAS'
 
     }
@@ -22,7 +23,7 @@ node{
         // OR build from Dockerfile  // from Dockerfile in "./"
         // customImage = docker.build("my-image:${env.BUILD_ID}", "./") 
         if (ml_type == 'CLASSICAL') {
-            customImage = docker.build("ramyrr/machinelearning_sklearn:${commit_id}", "./classical-reg/") 
+            customImage = docker.build("ramyrr/machinelearning_sklearn:${commit_id}", "./classical-reg-2022/") 
         }
         else if (ml_type == 'CNN') {
             echo 'The CNN model is is use'
@@ -63,8 +64,8 @@ node{
                 customImage.inside {
                     sh 'ls'
                     sh 'echo Hello Classical Regression'
-                    // sh 'python3 ./classical-reg/load_data.py'
-                    // sh 'python3 ./classical-reg/lr_rf_svr.py'
+                    sh 'python3 ./classical-reg/load_data.py'
+                    sh 'python3 ./classical-reg-2022/lr_rf_svr.py'
             }
             } 
 
@@ -108,7 +109,6 @@ node{
     stage('STAGING'){
         echo 'STAGING stage in Jenkins'
     }
-
 
     // I think I need to add a condition to push if the image is updated, e.g., h5py installed ??
     // stage('Push'){
