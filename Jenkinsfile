@@ -27,7 +27,7 @@ node{
         }
         else if (ml_type == 'CNN') {
             echo 'The CNN model is is use'
-            customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./classical-reg/") 
+            customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./classical-reg-2022/") 
         }
         else if (ml_type == 'RNN') {
             echo 'The RNN model is is use'
@@ -64,7 +64,7 @@ node{
                 customImage.inside {
                     sh 'ls'
                     sh 'echo Hello Classical Regression'
-                    sh 'python3 ./classical-reg/load_data.py'
+                    sh 'python3 ./classical-reg-2022/load_data.py'
                     sh 'python3 ./classical-reg-2022/lr_rf_svr.py'
             }
             } 
