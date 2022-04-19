@@ -7,6 +7,7 @@ import numpy as np
 from math import sqrt
 import matplotlib.pyplot as plt
 from sklearn.model_selection import train_test_split
+import math
 # from sqlite3.test import regression
 
 """ what about decision tree """
@@ -53,11 +54,6 @@ rul_file = [file_path+f"RUL_FD00{i}.txt" for i in [1, 2, 3, 4]]
 # 1- example of custom scoring:
 # ftwo_scorer = make_scorer(fbeta_score, beta=2)
 # grid = GridSearchCV(LinearSVC(), param_grid={'C': [1, 10]}, scoring=ftwo_scorer, cv=5)
-
-""" Model names """
-model_names = ['LinearRegression', 'DecisionTreeRegressor',
-               'RandomForestRegressor', 'SVR',
-               'ExtraTreesRegressor', 'GradientBoostingRegressor']
 
 
 """ Model1: Linear Regression """
@@ -134,15 +130,18 @@ reg_pipeline = Pipeline([("regression", rf_model_reg)])
 model1_reg = {"regression": [linear_model_reg]}
 
 model2_reg = {"regression": [dt_model_reg],
-              "regression__splitter": ["best", "random"],
-              "regression__max_features": ["auto", "sqrt", "log2"]}   # max_features??
+              # "regression__splitter": ["best", "random"],
+              "regression__min_samples_split": [2, 100, 200],
+              "regression__min_samples_leaf": [1, 5, 10],
+              "regression__max_features": ["auto", "log2"]}   # ["auto", "sqrt", "log2"]    # max_features??
 # max_depth int, default=None
 # min_samples_split int or float, default=2
 # min_samples_leaf int or float, default=1
 # max_features int, float or {“auto”, “sqrt”, “log2”}, default=None
+# https://datascience.stackexchange.com/questions/41417/how-max-features-parameter-works-in-decisiontreeclassifier
 
 model3_reg = {"regression": [rf_model_reg],
-              "regression__n_estimators": [10, 100],
+              "regression__n_estimators": [10, 50, 100],
               "regression__max_features": ["auto", "sqrt", "log2"]}   # max_features??
 # n_estimators int, default=100
 # max_depth int, default=None
@@ -181,22 +180,20 @@ model6_reg = {"regression": [grad_boost_model_reg],
 # (learning_rate=0.1,n_estimators=100,subsample=1)
 
 
-
-
 """ Custom scoring 0 """
 # print(sorted(sklearn.metrics.SCORERS.keys()))
 
 # 2- example of custom scoring:
 score_mse = make_scorer(mean_squared_error, greater_is_better=False)
 
-""" Custom scoring 1 """
-def my_custom_loss_func(y_true, y_pred):
-    test_mser = np.sum(np.square(y_true-y_pred))/len(y_true)
-    return test_mser
+# """ Custom scoring 1 """
+# def my_custom_loss_func(y_true, y_pred):
+#     test_mser = np.sum(np.square(y_true-y_pred))/len(y_true)
+#     return test_mser
 
-""" Custom scoring 2 """
-scoring = {'accuracy': make_scorer(mean_squared_error, greater_is_better=False),
-           'prec': 'precision'}
+# """ Custom scoring 2 """
+# scoring = {'accuracy': make_scorer(mean_squared_error, greater_is_better=False),
+#            'prec': 'precision'}
 
 def scoring_func(test_y_RUL, test_y_pred):
     N = test_y_RUL.shape[0]
@@ -236,10 +233,14 @@ for i in range(len(train_file)):
     # print("shape of y_train", y_train.shape)
     # print("shape of y_test", y_test.shape)
 
-    search_space_reg = [model1_reg]     #, model2_reg, model3_reg, model4_reg, model5_reg, model6_reg]       # noqa
+    """ Model names """
+    model_names = ['LinearRegression', 'DecisionTreeRegressor',
+                'RandomForestRegressor', 'SVR',
+                'ExtraTreesRegressor', 'GradientBoostingRegressor']
+    search_space_reg = [model1_reg, model2_reg, model3_reg, model4_reg, model5_reg, model6_reg]       # noqa
 
     for j in range(len(search_space_reg)):
-        print(f"\n >>>>>>>>>>>>>>>> train file {i+1} using model {model_names[j]}")
+        print(f"\n 111111111111111111111 train file {i+1} using model {model_names[j]}")
         clf_reg = GridSearchCV(reg_pipeline,
                                search_space_reg[j],
                                cv=5, n_jobs=-1,
@@ -250,7 +251,7 @@ for i in range(len(train_file)):
         best = clf_reg.fit(X_train, y_train)
         print(f"best.best_params_: {best.best_params_} and best.best_score_: {best.best_score_}")   # noqa
         means = clf_reg.cv_results_['mean_test_score']  # list of mean_test_score for each model     # noqa
-        print("means......", means)
+        # print("means......", means)
 
         # cv stands for cross-validations
         for mean, params in zip(means, clf_reg.cv_results_['params']):
@@ -273,18 +274,19 @@ for i in range(len(train_file)):
         with open(logs_and_h5_path+"lr_rf_svr_.txt", "a") as f:
             if (i==0) and (j==0):
                 f.write("\n 000000000 This is a new simulation run")
-                
             f.write(f"For train file {i+1}, regressor type {model_names[j]}\n")
             f.write(f"Final mean_absolute_error is {mean_abs_err}\n")
             f.write(f"Final mean_squared_error is {mean_sqrd_err}\n")
             f.write(f"Root mean_squared_error is {root_mean_sqrd_err}\n")
             f.write("\n")
         
-        # test_y_pred = clf_reg.predict(test_X_RUL)
-        # score = scoring_func(test_y_RUL, test_y_pred)
-        # print("score is: ", score)
+        test_y_pred = clf_reg.predict(test_X_RUL)
+        score = scoring_func(test_y_RUL, test_y_pred)
+        print("score is: ", score)
 
-        dump(clf_reg, logs_and_h5_path+f"clf_reg_{i+1}_{model_names[j]}.joblib")      # noqa
+        # dump(clf_reg, logs_and_h5_path+f"clf_reg_{i+1}_{model_names[j]}.joblib")      # noqa
+    
+    print(f" 0000000000000000000 end of file number {i+1} for Classical Models 0000000000000000000")
 
 
 
