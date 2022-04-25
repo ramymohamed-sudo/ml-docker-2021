@@ -22,3 +22,14 @@ Final mean_absolute_error is 17.243304200733014
 Final mean_squared_error is 649.8595996616859
 Root mean_squared_error is 25.492343942087512
 
+
+ 000000000 This is a new simulation runFor train file 1, regressor type LinearRegression
+Final mean_absolute_error is 16.50815773010254
+Final mean_squared_error is 414.5323486328125
+Root mean_squared_error is 20.360067500693912
+
+For train file 1, regressor type DecisionTreeRegressor
+Final mean_absolute_error is 15.017589219787437
+Final mean_squared_error is 418.86538635897665
+Root mean_squared_error is 20.466201072963607
+

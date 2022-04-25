@@ -12,8 +12,8 @@ node{
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
-        ml_type = 'CLASSICAL'
-        // ml_type = 'RNN'
+        // ml_type = 'CLASSICAL'
+         ml_type = 'RNN'
         // ml_type = 'PULL_KERAS'
 
     }
@@ -74,21 +74,21 @@ node{
             }
 
             else if (ml_type == 'RNN') {
-                echo 'I Run the CNN ML model'
+                echo 'I Run the RNN ML model'
                 customImage.inside {
                     sh 'ls'
                     sh 'echo Hello RNN-based Regression'
                     sh 'python3 ./rnn/load_data_4_files_1D_2D.py'
                     
-                    // sh 'echo now we RUN 1-Layer LSTM'
-                    // sh 'python3 ./rnn/rnn_one_layer_2D.py'
-                    // sh 'echo now we RUN 1-Layer GRU'
-                    // sh 'python3 ./rnn/gru_one_layer_2D.py'
+                    sh 'echo now we RUN 1-Layer LSTM'
+                    sh 'python3 ./rnn/rnn_one_layer_2D.py'
+                    sh 'echo now we RUN 1-Layer GRU'
+                    sh 'python3 ./rnn/gru_one_layer_2D.py'
 
-                    sh 'echo now we RUN 2-Layers LSTM' 
-                    sh 'python3 ./rnn/rnn_two_layer_2D.py'
-                    sh 'echo now we RUN 2-Layers GRU'
-                    sh 'python3 ./rnn/gru_two_layer_2D.py'
+                    // sh 'echo now we RUN 2-Layers LSTM' 
+                    // sh 'python3 ./rnn/rnn_two_layer_2D.py'
+                    // sh 'echo now we RUN 2-Layers GRU'
+                    // sh 'python3 ./rnn/gru_two_layer_2D.py'
 
                     // sh 'echo now we RUN 3-Layers LSTM' 
                     // sh 'python3 ./rnn/rnn_three_layer_2D.py'

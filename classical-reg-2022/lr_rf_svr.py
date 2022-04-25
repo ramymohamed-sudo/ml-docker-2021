@@ -137,6 +137,7 @@ model2_reg = {"regression": [dt_model_reg],
 # max_depth int, default=None
 # min_samples_split int or float, default=2
 # min_samples_leaf int or float, default=1
+# https://discuss.analyticsvidhya.com/t/what-does-min-samples-split-means-in-decision-tree/6233/3
 # max_features int, float or {“auto”, “sqrt”, “log2”}, default=None
 # https://datascience.stackexchange.com/questions/41417/how-max-features-parameter-works-in-decisiontreeclassifier
 
@@ -157,6 +158,8 @@ model4_reg = {"regression": [svr_model_reg],
 # degree int, default=3 (considered only if kernel=poly)
 # gamma{‘scale’, ‘auto’} or float, default=’scale’
 # C float, default=1.0 Regularization parameter.
+# https://stats.stackexchange.com/questions/31066/what-is-the-influence-of-c-in-svms-with-linear-kernel
+
 
 
 model5_reg = {"regression": [extra_tree_model_reg],
@@ -173,7 +176,7 @@ model6_reg = {"regression": [grad_boost_model_reg],
               "regression__learning_rate": [0.001, 0.01, 0.1],
               "regression__subsample": [0.5, 1]}
 
-# loss{‘squared_error’, ‘absolute_error’, ‘huber’, ‘quantile’}, default=’squared_error’
+# Loss function to be optimized: loss{‘squared_error’, ‘absolute_error’, ‘huber’, ‘quantile’}, default=’squared_error’
 # learning_rate float, default=0.1
 # n_estimators  int, default=100
 # subsample float, default=1.0
