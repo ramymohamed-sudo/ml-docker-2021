@@ -12,8 +12,8 @@ node{
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
-        // ml_type = 'CNN-RNN'
-        ml_type = 'RNN'
+        ml_type = 'CNN-RNN'
+        // ml_type = 'RNN'
         // ml_type = 'PULL_KERAS'
 
     }
@@ -109,7 +109,7 @@ node{
                     sh 'ls'
                     sh 'echo Hello Convolutional RNN-based Regression'
                     sh 'python3 ./cnn/load_data_4_files_1D_2D.py'
-                    
+
                     sh 'echo now we RUN Convolutional 2-Layers LSTM' 
                     sh 'python3 ./cnn/cnn_rnn_two_layer_2D.py'
                     sh 'echo now we RUN Convolutional 2-Layers GRU'
