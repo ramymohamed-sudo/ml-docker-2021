@@ -26,12 +26,17 @@ node{
             customImage = docker.build("ramyrr/machinelearning_sklearn:${commit_id}", "./classical-reg-2022/") 
         }
         else if (ml_type == 'CNN') {
-            echo 'The CNN model is is use'
+            echo 'The CNN model is in use'
             customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./classical-reg-2022/") 
         }
         else if (ml_type == 'RNN') {
-            echo 'The RNN model is is use'
+            echo 'The RNN model is in use'
             customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./rnn/")  
+        }
+
+        else if (ml_type == 'CNN-RNN') {
+            echo 'The Convolutional RNN model is in use'
+            customImage = docker.build("ramyrr/machinelearning_keras:${commit_id}", "./cnn/")  
         }
 
         else if (ml_type == 'PULL_KERAS') {
@@ -98,6 +103,20 @@ node{
             }
             }
 
+            else if (ml_type == 'CNN-RNN') {
+                echo 'I Run the Convolutional RNN ML model'
+                customImage.inside {
+                    sh 'ls'
+                    sh 'echo Hello Convolutional RNN-based Regression'
+                    sh 'python3 ./cnn/load_data_4_files_1D_2D.py'
+                    
+                    sh 'echo now we RUN Convolutional 2-Layers LSTM' 
+                    sh 'python3 ./cnn/cnn_rnn_two_layer_2D.py'
+                    sh 'echo now we RUN Convolutional 2-Layers GRU'
+                    sh 'python3 ./cnn/cnn_gru_two_layer_2D.py'
+
+            }
+            }
 
             else {
                 echo 'default case'
