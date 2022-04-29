@@ -12,8 +12,8 @@ node{
         sh 'git rev-parse --short HEAD > .git/commit-id'  
         commit_id = readFile('.git/commit-id').trim()
         // ml_type = 'CLASSICAL'
-        ml_type = 'CNN-RNN'
-        // ml_type = 'RNN'
+        // ml_type = 'CNN-RNN'
+        ml_type = 'RNN'
         // ml_type = 'PULL_KERAS'
 
     }
