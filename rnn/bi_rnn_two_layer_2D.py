@@ -105,7 +105,7 @@ def model_builder(hp, units, n_FC, activation_rnn, activation_dense, lr, dropout
                        return_sequences=True,
                        activation=activation_rnn)))
         model.add(Bidirectional(LSTM(units=units,
-                       return_sequences=True,
+                       return_sequences=False,
                        activation=activation_rnn)))
         if dropout:
             model.add(Dropout(rate=dropout_rate))
