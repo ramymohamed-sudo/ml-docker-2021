@@ -185,7 +185,7 @@ for i in range(len(train_file)):
                             max_trials=5,
                             executions_per_trial=2,
                             overwrite=True,
-                            directory=logs_and_h5_path,
+                            # directory=logs_and_h5_path,
                             project_name="rnn__one_layer",)
 
     print("tuner.search_space_summary()", tuner.search_space_summary())
