@@ -109,13 +109,13 @@ def model_builder(hp, filters, units, n_FC, activation_rnn, activation_dense, lr
         
         model.add(MaxPooling1D(pool_size=2, strides=1))
 
-        model.add(LSTM(units=units,
-                       # input_shape=(dim2, dim3),
-                       return_sequences=True,
-                       activation=activation_rnn))
-        model.add(LSTM(units=units,
-                       return_sequences=False,
-                       activation=activation_rnn))
+        model.add(Bidirectional(LSTM(units=units,
+                                # input_shape=(dim2, dim3),
+                                return_sequences=True,
+                                activation=activation_rnn)))
+        model.add(Bidirectional(LSTM(units=units,
+                                return_sequences=False,
+                                activation=activation_rnn)))
         if dropout:
             model.add(Dropout(rate=dropout_rate))
 
@@ -216,13 +216,13 @@ for i in range(len(train_file)):
 
     print("highestScoreModel.summary()", highestScoreModel.summary())
     
-    # keras.utils.plot_model(model, "CONV_LSTM.png")
+    # keras.utils.plot_model(model, "CONV_Bi_LSTM.png")
     # plt.show()
     # for layer in model.layers:
     # print(layer.output_shape)
 
-    print(f" 0000000000000000000 end of file number {i+1} for Convolutional LSTM 2 layers 0000000000000000000")
-    print(f" 0000000000000000000 end of file number {i+1} for Convolutional LSTM 2 layers 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} for Convolutional Bidirectional LSTM 2 layers 0000000000000000000")
+    print(f" 0000000000000000000 end of file number {i+1} for Convolutional Bidirectional LSTM 2 layers 0000000000000000000")
 
 
 # lr_schedule = keras.optimizers.schedules.ExponentialDecay(

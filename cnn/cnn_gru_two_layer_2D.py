@@ -107,6 +107,8 @@ def model_builder(hp, filters, units, n_FC, activation_rnn, activation_dense, lr
                                activation="relu",
                                input_shape=(dim2, dim3)))
 
+        model.add(MaxPooling1D(pool_size=2, strides=1))
+
         model.add(GRU(units=units,
                        # input_shape=(dim2, dim3),
                        return_sequences=True,
