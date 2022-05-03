@@ -150,7 +150,7 @@ def scoring_func(test_y_RUL, test_y_pred):
     return s_i_N
 
 
-for i in range(len(train_file)):
+for i in range(2, len(train_file)):
     print(f"train file number {i+1}")
     sequence_length = dim1_list[i]
     dim2 = sequence_length
